@@ -1,5 +1,6 @@
 require("dotenv").config();
 const inquirer = require("inquirer");
+const mysql = require('mysql2');
 console.log("got inquirer")
 const Db = require("./db/db");
 const {
@@ -24,15 +25,27 @@ const {
 
 const start = async () => {
   try {
-    const db = new Db({
-      host: process.env.DB_HOST,
-      user: process.env.DB_USER,
-      password: process.env.DB_PASSWORD,
-      database: process.env.DB_NAME,
-    });
-  
+    // const db = new Db({
+    //   host: process.env.DB_HOST,
+    //   user: process.env.DB_USER,
+    //   password: process.env.DB_PASSWORD,
+    //   database: process.env.DB_NAME,
+    // });
+    const db = mysql.createConnection(
+      {
+        host: process.env.DB_HOST,
+        // MySQL username,
+        user: process.env.DB_USER,
+        // TODO: Add MySQL password here
+        password: process.env.DB_PASSWORD,
+        database: process.env.DB_NAME
+      },
+      console.log(`Connected to the movies_db database.`)
+    );
+
+    db.connect()
     // await db.start();
-    console.log(db)
+   
   } catch (error) {
     console.log(error)
   }
@@ -175,3 +188,8 @@ const start = async () => {
 };
 
 start();
+
+db.query("SHOW TABLES;", (err, res) => {
+  // if (err) throw err
+  console.table(res)
+})

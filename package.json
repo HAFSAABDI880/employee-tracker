@@ -22,8 +22,7 @@
   "dependencies": {
     "dotenv": "^16.0.3",
     "inquirer": "^8.2.0",
-    "mysql2": "^3.2.0",
-    "node": "^17.2.0"
+    "mysql2": "^3.2.0"
   },
   "devDependencies": {
     "express": "^4.17.1",
